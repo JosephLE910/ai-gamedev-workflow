@@ -152,7 +152,7 @@ rm <RESOURCE_LOCK>
 
 读 `shared/LESSONS.md` **只读** §{工种标签} + §DEBUG 两章，别整文件加载（LESSONS 在涨，整读是浪费）。用顶部分类表跳到对应 §。
 
-**领域实现卡住时**，查输入层提炼笔记 `CodeWorkshop/shared/notes/`（不够再翻 `Books/` 原书）——前人经验，别硬猜。见 `WORKFLOW.md`「§4.2 输入层」。
+**领域实现卡住时**，查输入层提炼笔记 `CodeWorkshop/ai-gamedev-workflow/notes/`（不够再翻 `Books/` 原书）——前人经验，别硬猜。见 `WORKFLOW.md`「§4.2 输入层」。
 
 若项目有 `PIPELINE.md` 或 `<DOMAIN>-<DOMAIN>-MESSAGE.md`，跨工种/跨仓库交付和接入前先读对应文件；交付后把位置、规格、遗留写回公告板。
 

@@ -1,7 +1,7 @@
 # AI 开发架构 —— 多智能体协作蓝图（可移植部署）
 
 > 🏛️ **顶层主本（CANONICAL MASTER）· 仅由工坊主理人助手维护**
-> 这是工坊跨项目的**唯一权威蓝图**，位于 `CodeWorkshop/shared/WORKFLOW.md`（工作区跨项目层）。
+> 这是工坊跨项目的**唯一权威蓝图**，位于 `CodeWorkshop/ai-gamedev-workflow/WORKFLOW.md`（工作区跨项目层）。
 > - **新项目**：从本主本**拷贝**一份到 `<repo>/shared/WORKFLOW.md`，本地只改项目特定增量（路径 / 工具链 / 资源锁）。
 > - **改进回路**：各项目副本在实战中迭代出的**通用**流程改进，由主理人助手**定期从衍生本提炼、抽象后回提到本主本**——别在项目副本里直接改写蓝图的通用条款（那只会造成副本漂移）。
 > - **衍生本**：`SundayDrive/shared/`（参考实现，最成熟）、`OutLawTeam_tmp/shared/` 等。
@@ -43,7 +43,7 @@
 
 ```
 <workspace>/                  工作区（输入层放这层，跨项目共用）
-  AICoworker/   Books/   shared/notes/      ← 输入层（外部知识，见 §4.2）
+  AICoworker/   Books/   ai-gamedev-workflow/notes/      ← 输入层（外部知识，见 §4.2）
   <repo>/                    本项目仓库
     plans/                   任务书：plans/<序号>-<工种标签>-<简短名>.md
     shared/                  ← 协作核心，部署时主要就是建这一堆
@@ -63,10 +63,10 @@
 |---|---|---|
 | **规则**（开工读） | `AI_ONBOARDING` · `WORKFLOW` · `PLANNER_RULES` · `EXECUTOR_RULES` | 接入前门 + 架构蓝图 + 两侧开工规则。详见 §3 各节。 |
 | **外部化记忆**（交接） | `plans/` · `PROJECT_STATE` · `LESSONS` · `PLANNER_EXCHANGE` | 任务书 / 状态 / 经验 / 通信——状态外部化，换会话/换模型不丢。详见 §4.1。 |
-| **输入层**（按需查） | `<workspace>/{AICoworker, Books, shared/notes}` | 项目外的方法论/领域知识。详见 §4.2。 |
+| **输入层**（按需查） | `<workspace>/{AICoworker, Books, ai-gamedev-workflow/notes}` | 项目外的方法论/领域知识。详见 §4.2。 |
 
-> ⚠️ 有**两个 `shared/`**：workspace 层 `<workspace>/shared/`（跨项目层）和 repo 层 `<repo>/shared/`（本项目协作文件），别混。
-> workspace 层 `shared/` 一身两职：既是**输入层**（`notes/`，§4.2）又是**蓝图主本所在**（本 AI_ONBOARDING + WORKFLOW + RULES 的 canonical 版，见顶部主本头 + §6）。
+> ⚠️ 有**两层**：workspace 层 `<workspace>/ai-gamedev-workflow/`（跨项目主本）和 repo 层 `<repo>/shared/`（本项目协作文件），别混。
+> workspace 层 `ai-gamedev-workflow/` 一身两职：既是**输入层**（`notes/`，§4.2）又是**蓝图主本所在**（本 AI_ONBOARDING + WORKFLOW + RULES 的 canonical 版，见顶部主本头 + §6）。
 >
 > 怎么从零搭出来 → **§5 部署清单**。
 
@@ -253,7 +253,7 @@ rm <RESOURCE_LOCK>
 |---|---|---|
 | `AICoworker/` | **AI 开发方法论**：token 成本、如何写 Skill、如何管 Agent（文章+PDF+总结） | 规划者——怎么运作"协作本身" |
 | `Books/` | **领域原始书**：Game AI Pro、Real-Time Cameras、游戏编程模式、网络多人架构、腾讯精粹 | 设计 + 实现——领域手艺 |
-| `shared/notes/` | **从 Books 提炼的读书笔记**（相机/编程模式/网络架构，消化成可引用的 .md） | 规划者 + 执行者，随用随查 |
+| `ai-gamedev-workflow/notes/` | **从 Books 提炼的读书笔记**（相机/编程模式/网络架构，消化成可引用的 .md） | 规划者 + 执行者，随用随查 |
 
 - **和项目内是同一个"原始→提炼"模式**：`Books → notes` 对应 `代码 → LESSONS`。原书太厚不可能每次读，提炼层才高频引用。
 - **用法**：做设计决策/写 plan 前先查 `notes/`（不够再翻 `Books/`）；方法论/协作效率问题查 `AICoworker/`；查到的经验**落进 plan/LESSONS（带出处）**。已接进两份 RULES 的"读什么"。
@@ -273,7 +273,7 @@ rm <RESOURCE_LOCK>
 
 按 §1.2 的骨架，从零搭：
 
-**① 从主本拷贝蓝图**：把顶层主本 `<workspace>/shared/` 的 `AI_ONBOARDING.md` + `WORKFLOW.md` + `PLANNER_RULES.md` + `EXECUTOR_RULES.md` 拷到 `<repo>/shared/`；再按 §1.2 那张图补齐其余（`<repo>/plans/` + `shared/` 的 PROJECT_STATE / LESSONS / PLANNER_EXCHANGE 三份本地记忆 + 工具入口文件如 `CLAUDE.md` / `AGENTS.md`）。WORKFLOW 通用条款**不动**（要改走 §6 回提主本），只在 RULES / STATE 里填项目特定增量。
+**① 从主本拷贝蓝图**：把顶层主本 `<workspace>/ai-gamedev-workflow/` 的 `AI_ONBOARDING.md` + `WORKFLOW.md` + `PLANNER_RULES.md` + `EXECUTOR_RULES.md` 拷到 `<repo>/shared/`；再按 §1.2 那张图补齐其余（`<repo>/plans/` + `shared/` 的 PROJECT_STATE / LESSONS / PLANNER_EXCHANGE 三份本地记忆 + 工具入口文件如 `CLAUDE.md` / `AGENTS.md`）。WORKFLOW 通用条款**不动**（要改走 §6 回提主本），只在 RULES / STATE 里填项目特定增量。
 
 **② 建执行者 worktree**
 ```bash
@@ -292,7 +292,7 @@ git worktree add ../<PROJECT>-exec -b plan/01-bootstrap main
 - PLANNER_EXCHANGE：留协调板表头即可。
 
 **⑤ 接上输入层（§4.2）**
-- 工作区已有 `AICoworker/Books/shared/notes/` → 直接沿用（跨项目共享）。
+- 工作区已有 `AICoworker/Books/ai-gamedev-workflow/notes/` → 直接沿用（跨项目共享）。
 - 新工作区/新领域 → 建这三个：方法论 + 该领域权威书/文档 + 一个 `notes/` 提炼层（Web 项目可放框架文档/设计规范）。RULES 的"读什么"已指向它，确认路径对得上。
 
 **⑥ 跑通第一条 plan（验证管线）**
@@ -316,7 +316,7 @@ git worktree add ../<PROJECT>-exec -b plan/01-bootstrap main
 流程 / 分层 / 资源约束有变更 → 先在 `PLANNER_EXCHANGE.md` 协商拍板 → **立刻固化进本项目副本的 WORKFLOW/RULES**。EXCHANGE 只是"我们决定改成 X"的记录，不是规范归宿；决策只躺在 EXCHANGE 历史里、下个会话读不到 = 漂移。
 
 **② 跨项目：衍生本 → 主本（防"多副本分叉"）**
-各项目副本在实战中迭代出的**通用**改进，由**工坊主理人助手**定期从衍生本提炼、抽象后**回提到顶层主本**（`<workspace>/shared/`）。
+各项目副本在实战中迭代出的**通用**改进，由**工坊主理人助手**定期从衍生本提炼、抽象后**回提到顶层主本**（`<workspace>/ai-gamedev-workflow/`）。
 - 主本是蓝图**通用条款的唯一可改处**；项目副本只改项目特定增量（路径 / 工具链 / 资源锁）。
 - 别在项目副本里直接改通用条款——多副本各自演进 = 副本漂移（比 EXCHANGE 漂移更难收敛）。
 - 提炼对象优先是**协作流程本身**（角色 / 分层 / 外部化记忆 / 治理），**不是领域 LESSONS**（那些过于项目特定，留在各项目库里最有用）。
