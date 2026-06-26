@@ -273,7 +273,7 @@ rm <RESOURCE_LOCK>
 
 按 §1.2 的骨架，从零搭：
 
-**① 从主本拷贝蓝图**：把顶层主本 `<workspace>/ai-gamedev-workflow/` 的 `AI_ONBOARDING.md` + `WORKFLOW.md` + `PLANNER_RULES.md` + `EXECUTOR_RULES.md` 拷到 `<repo>/shared/`；再按 §1.2 那张图补齐其余（`<repo>/plans/` + `shared/` 的 PROJECT_STATE / LESSONS / PLANNER_EXCHANGE 三份本地记忆 + 工具入口文件如 `CLAUDE.md` / `AGENTS.md`）。WORKFLOW 通用条款**不动**（要改走 §6 回提主本），只在 RULES / STATE 里填项目特定增量。
+**① 从主本拷贝蓝图**：把顶层主本 `<workspace>/ai-gamedev-workflow/` 的 `AI_ONBOARDING.md` + `WORKFLOW.md` + `PLANNER_RULES.md` + `EXECUTOR_RULES.md` + `LESSONS.md` 拷到 `<repo>/shared/`；再按 §1.2 那张图补齐其余（`<repo>/plans/` + `shared/` 的 PROJECT_STATE / PLANNER_EXCHANGE 两份本地记忆 + 工具入口文件如 `CLAUDE.md` / `AGENTS.md`）。WORKFLOW 通用条款**不动**（要改走 §6 回提主本），只在 RULES / STATE 里填项目特定增量。
 
 **② 建执行者 worktree**
 ```bash
@@ -288,7 +288,7 @@ git worktree add ../<PROJECT>-exec -b plan/01-bootstrap main
 - AI_ONBOARDING：保留通用接入契约；补本项目入口和特殊红线。
 - PLANNER_RULES / EXECUTOR_RULES：路径、资源锁、工具命令（规则本身通用）。
 - PROJECT_STATE：写当前可用状态 + 协作协议节。
-- LESSONS：定**工种标签**（按新项目领域分，如 Web 可能 `UI/API/STATE/BUILD/...`），建空索引表。
+- LESSONS：主本已提供统一经验库（按工种分类的完整模板，含跨引擎经验）。如需新工种标签，在分类表末尾追加；项目特定经验按现有格式从零积累。
 - PLANNER_EXCHANGE：留协调板表头即可。
 
 **⑤ 接上输入层（§4.2）**
@@ -319,6 +319,6 @@ git worktree add ../<PROJECT>-exec -b plan/01-bootstrap main
 各项目副本在实战中迭代出的**通用**改进，由**工坊主理人助手**定期从衍生本提炼、抽象后**回提到顶层主本**（`<workspace>/ai-gamedev-workflow/`）。
 - 主本是蓝图**通用条款的唯一可改处**；项目副本只改项目特定增量（路径 / 工具链 / 资源锁）。
 - 别在项目副本里直接改通用条款——多副本各自演进 = 副本漂移（比 EXCHANGE 漂移更难收敛）。
-- 提炼对象优先是**协作流程本身**（角色 / 分层 / 外部化记忆 / 治理），**不是领域 LESSONS**（那些过于项目特定，留在各项目库里最有用）。
+- 提炼对象涵盖**协作流程**（角色 / 分层 / 外部化记忆 / 治理）**和领域经验**（LESSONS.md 的分类体系与跨引擎条目）。各项目的项目特定经验仍在本项目 `shared/LESSONS.md` 独立演进，但跨项目通用的经验由主理人助手提取后回提主本。
 
 > 一句话：项目内 `EXCHANGE→RULES` 防决策丢失；跨项目 `衍生本→主本` 防多副本分叉。主本只此一处，只由主理人助手改。
