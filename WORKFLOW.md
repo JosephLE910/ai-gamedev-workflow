@@ -43,7 +43,7 @@
 
 ```
 <workspace>/                  工作区（输入层放这层，跨项目共用）
-  AICoworker/   Books/   ai-gamedev-workflow/notes/      ← 输入层（外部知识，见 §4.2）
+  Books/          ai-gamedev-workflow/notes/                ← 输入层（外部知识+AI方法论，见 §4.2）
   <repo>/                    本项目仓库
     plans/                   任务书：plans/<序号>-<工种标签>-<简短名>.md
     shared/                  ← 协作核心，部署时主要就是建这一堆
@@ -63,7 +63,7 @@
 |---|---|---|
 | **规则**（开工读） | `AI_ONBOARDING` · `WORKFLOW` · `PLANNER_RULES` · `EXECUTOR_RULES` | 接入前门 + 架构蓝图 + 两侧开工规则。详见 §3 各节。 |
 | **外部化记忆**（交接） | `plans/` · `PROJECT_STATE` · `LESSONS` · `PLANNER_EXCHANGE` | 任务书 / 状态 / 经验 / 通信——状态外部化，换会话/换模型不丢。详见 §4.1。 |
-| **输入层**（按需查） | `<workspace>/{AICoworker, Books, ai-gamedev-workflow/notes}` | 项目外的方法论/领域知识。详见 §4.2。 |
+| **输入层**（按需查） | `<workspace>/{Books, ai-gamedev-workflow/notes}` | 项目外的领域知识 + AI 方法论。详见 §4.2。 |
 
 > ⚠️ 有**两层**：workspace 层 `<workspace>/ai-gamedev-workflow/`（跨项目主本）和 repo 层 `<repo>/shared/`（本项目协作文件），别混。
 > workspace 层 `ai-gamedev-workflow/` 一身两职：既是**输入层**（`notes/`，§4.2）又是**蓝图主本所在**（本 AI_ONBOARDING + WORKFLOW + RULES 的 canonical 版，见顶部主本头 + §6）。
@@ -251,12 +251,11 @@ rm <RESOURCE_LOCK>
 
 | 来源 | 是什么 | 主要喂谁 |
 |---|---|---|
-| `AICoworker/` | **AI 开发方法论**：token 成本、如何写 Skill、如何管 Agent（文章+PDF+总结） | 规划者——怎么运作"协作本身" |
 | `Books/` | **领域原始书**：Game AI Pro、Real-Time Cameras、游戏编程模式、网络多人架构、腾讯精粹 | 设计 + 实现——领域手艺 |
-| `ai-gamedev-workflow/notes/` | **从 Books 提炼的读书笔记**（相机/编程模式/网络架构，消化成可引用的 .md） | 规划者 + 执行者，随用随查 |
+| `ai-gamedev-workflow/notes/` | **提炼笔记**：从 Books 的读书笔记（相机/编程模式/网络架构）+ AI 协作方法论（Skill 设计、Agentic Engineering、token 成本）| 规划者 + 执行者，随用随查 |
 
 - **和项目内是同一个"原始→提炼"模式**：`Books → notes` 对应 `代码 → LESSONS`。原书太厚不可能每次读，提炼层才高频引用。
-- **用法**：做设计决策/写 plan 前先查 `notes/`（不够再翻 `Books/`）；方法论/协作效率问题查 `AICoworker/`；查到的经验**落进 plan/LESSONS（带出处）**。已接进两份 RULES 的"读什么"。
+- **用法**：做设计决策/写 plan 前先查 `notes/`（不够再翻 `Books/`）；查到的经验**落进 plan/LESSONS（带出处）**。已接进两份 RULES 的"读什么"。
 
 ### 4.3 可选扩展：产线文档与跨工种公告板
 
@@ -292,7 +291,7 @@ git worktree add ../<PROJECT>-exec -b plan/01-bootstrap main
 - PLANNER_EXCHANGE：留协调板表头即可。
 
 **⑤ 接上输入层（§4.2）**
-- 工作区已有 `AICoworker/Books/ai-gamedev-workflow/notes/` → 直接沿用（跨项目共享）。
+- 工作区已有 `Books/ai-gamedev-workflow/notes/` → 直接沿用（跨项目共享）。
 - 新工作区/新领域 → 建这三个：方法论 + 该领域权威书/文档 + 一个 `notes/` 提炼层（Web 项目可放框架文档/设计规范）。RULES 的"读什么"已指向它，确认路径对得上。
 
 **⑥ 跑通第一条 plan（验证管线）**

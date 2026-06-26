@@ -18,8 +18,7 @@
 3. `shared/PLANNER_EXCHANGE.md` —— 协调板：任务认领 / 资源归属 / 决策变更 / 预警 / 待拍板。
 
 **做设计决策 / 写 plan 前按需查（输入层，见 `WORKFLOW.md`「§4.2 输入层」）**：
-- `CodeWorkshop/ai-gamedev-workflow/notes/`（提炼笔记，随用随查；不够再翻 `Books/` 原书）—— 领域决策的前人经验。
-- `CodeWorkshop/AICoworker/` —— AI 协作方法论（省 token / 拆 Agent / 写 Skill）。
+- `CodeWorkshop/ai-gamedev-workflow/notes/`（提炼笔记，随用随查；不够再翻 `Books/` 原书）—— 领域决策的前人经验 + AI 协作方法论（Skill 设计、Agentic Engineering、token 成本）。
 - 查到的外部经验**落进 plan/LESSONS（带出处）**，沉淀成项目内记忆。
 
 ## 出 plan（写初版）
