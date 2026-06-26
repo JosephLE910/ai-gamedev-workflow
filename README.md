@@ -15,7 +15,7 @@
 | `PLANNER_RULES.md` | 规划者开工规则 |
 | `EXECUTOR_RULES.md` | 执行者开工规则 |
 | `LESSONS.md` | 统一经验库（横跨 UE/Unity/Blender 三项目，按工种分类索引） |
-| `notes/` | 从经典书提炼的读书笔记（输入层） |
+| `notes/` | 提炼笔记（输入层）：游戏开发经典书笔记 + AI 协作方法论（Agentic Engineering / Token 成本 / Skill 设计 / Loop Engineering / 人机协作） |
 
 ## 快速接入
 
