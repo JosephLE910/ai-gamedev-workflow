@@ -541,25 +541,49 @@ Blender 里给的 emission 材质（青色面罩/绿黏液点）导进 Unity **B
 
 ## §AUDIO — 音频系统
 
-### AUDIO-1. WebGL 自动播放必须有 AudioListener + 首次交互恢复 [Unity]
+### AUDIO-U1. WebGL 自动播放必须有 AudioListener + 首次交互恢复 [Unity]
 
 Unity WebGL 构建里 `AudioSource.Play()` 在浏览器交互前会被静默。实现：主相机挂 `AudioListener`，并在 `AudioManager` 里创建一次性输入监听对象，检测到任意键/鼠标/触摸后 `AudioListener.pause = false`，随后自毁。
 
-### AUDIO-2. WebGL 下 AudioMixer + one-shot 不稳定 [Unity]
+### AUDIO-U2. WebGL 下 AudioMixer + one-shot 不稳定 [Unity]
 
 WebGL 对 `AudioMixerGroup` 的 one-shot 支持会导致"播放一次后无声"。解决：WebGL 运行时跳过 `outputAudioMixerGroup`，让 `AudioSource` 走默认输出；AudioMixer 资产仍保留给非 WebGL 平台或后续音乐/UI 分组。
 
-### AUDIO-3. 用对象池 + PlayOneShot，避免 isPlaying 判断 [Unity]
+### AUDIO-U3. 用对象池 + PlayOneShot，避免 isPlaying 判断 [Unity]
 
 WebGL 上 `AudioSource.isPlaying` 状态不可靠。用固定数量 `AudioSource` 轮询 + `PlayOneShot(clip)`，不判断 `isPlaying`。
 
-### AUDIO-4. 短音效导入设置 [Unity]
+### AUDIO-U4. 短音效导入设置 [Unity]
 
 `Force To Mono` + `Compression Format: Vorbis`（WebGL 推荐）+ `Preload AudioData=true`；单条 <200KB、总音频 <2MB，灰盒阶段够用。
 
-### AUDIO-5. 占位音效可程序化生成 [Unity]
+### AUDIO-U5. 占位音效可程序化生成 [Unity]
 
 灰盒阶段用 `tools/audio/gen_sfx.py` 合成 6 条占位 WAV（noise/sweep/sine），总约 178KB；核心音效（玩家枪声）由用户提供，执行者只负责剪辑/重命名。
+
+### AUDIO-U6. 循环音频的素材本身必须平滑，Crossfade 不能修源头 [UE]
+
+UE 中引擎怠速循环有可听咔嗒声，尝试 100/300/800ms 交叉淡入淡出均失败。根因是源素材波形本身存在跳变，交叉淡入淡出只能改善无法根治。解决：替换为本身平滑的 8 秒源素材。快速测试：在 UE 编辑器中直接对 SoundWave 勾选 Looping，PIE 听 10 秒。
+
+### AUDIO-U7. Widget 2D 音效 + 关卡切换必须预留播放窗口 [UE]
+
+主菜单按钮点击 `PlaySound2D` 后立即 `OpenLevel`，世界卸载会切断音频设备导致声音被吞。解决：先播声音，再用 `FTimerHandle` 延迟 0.3–0.5 秒后切换关卡；此场景下音量需要放大（实测需 3.0 倍）。Widget 构造函数里对音频资产用 `ConstructorHelpers::FObjectFinder` 硬引用确保 Android cook 不丢失。
+
+### AUDIO-U8. Android Cook 不丢音频的前提：硬引用或显式 Cook 路径 [UE]
+
+全部音频（撞击/枪声/命中/UI/BGM/引擎循环）在构造函数里用 `ConstructorHelpers::FObjectFinder` 或 `UPROPERTY` 默认硬引用。永远不要对未被其他地方引用的资产走纯字符串 `LoadObject`——Android 单地图 cook 可能剥离。导入后循环音频需设 `SoundWave.bLooping = True`。
+
+### AUDIO-U9. 程序化合成音频：无资产依赖的降级方案 [UE]
+
+当没有警笛音效素材时，子类化 `USynthComponent` 在音频渲染线程上合成波形：警笛 = 三角波 LFO 扫频（600–1200Hz）+ 二倍谐波。零资产依赖，零 Android cook 风险。`Build.cs` 需加 `AudioMixer` 依赖，`USynthComponent` 没有默认构造函数。
+
+### AUDIO-U10. 多实体共享音效组件需要门控 [UE]
+
+撞击音效全局所有车都播；炮手射线扫到友方车辆；逐帧循环启动导致卡顿；占位音效复用（撞击声像枪声）需 pitch/volume 变通。解决：仅 `IsPlayerControlled()` 的车发射音效，友方车辆从遮挡检查排除，`SetEnabled` 做幂等。
+
+### AUDIO-U11. 建立音频资产来源清单 [跨引擎]
+
+维护一份 `AUDIO_SOURCES.md`，列每条音频的源 URL、许可证类型、署名要求、下载日期。CC-BY-NC 素材不可用于发布、需替换为 CC0；署名素材需记入致谢名单。OutLaw 的 `AudioMixer.mixer` 和 SundayDrive 的 `SFX_Car_IdlePurr_02` 等都需要追溯来源。
 
 ---
 
